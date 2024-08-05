@@ -16,6 +16,9 @@ class Cell:
         self._win = win
         self.walls = Walls(True, True, True, True) 
 
+    def __repr__(self) -> str:
+        return f"Cell at p1: {self._p1}, p2: {self._p2}"
+
     def draw(self, color: str) -> None:
         if self.walls.top:
             top_line = Line(self._p1, Point(self._p2.x, self._p1.y))
