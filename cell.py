@@ -15,23 +15,32 @@ class Cell:
         self._p2 = p2
         self._win = win
         self.walls = Walls(True, True, True, True) 
+        self.visited = False
 
     def __repr__(self) -> str:
-        return f"Cell at p1: {self._p1}, p2: {self._p2}"
+        return f"Cell at p1: {self._p1}, p2: {self._p2} with walls: {self.walls}"
 
     def draw(self, color: str) -> None:
+        top_line = Line(self._p1, Point(self._p2.x, self._p1.y))
+        right_line = Line(Point(self._p2.x, self._p1.y), self._p2)
+        bottom_line = Line(Point(self._p1.x, self._p2.y), self._p2)
+        left_line = Line(self._p1, Point(self._p1.x, self._p2.y))
         if self.walls.top:
-            top_line = Line(self._p1, Point(self._p2.x, self._p1.y))
             self._win.draw_line(top_line, color)
+        else:
+            self._win.draw_line(top_line, "#d9d9d9")
         if self.walls.right:
-            right_line = Line(Point(self._p2.x, self._p1.y), self._p2)
             self._win.draw_line(right_line, color)
+        else:
+            self._win.draw_line(right_line, "#d9d9d9")
         if self.walls.bottom:
-            bottom_line = Line(Point(self._p1.x, self._p2.y), self._p2)
             self._win.draw_line(bottom_line, color)
+        else:
+            self._win.draw_line(bottom_line, "#d9d9d9")
         if self.walls.left:
-            left_line = Line(self._p1, Point(self._p1.x, self._p2.y))
             self._win.draw_line(left_line, color)
+        else:
+            self._win.draw_line(left_line, "#d9d9d9")
 
     def draw_move(self, to_cell: 'Cell', undo: bool = False) -> None:
         p1x = self._p1.x + ((self._p2.x - self._p1.x) // 2)
